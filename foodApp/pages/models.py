@@ -16,9 +16,10 @@ class Menu(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to="menu_images")
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    rating = models.DecimalField(max_digits=3, decimal_places=2)
-    review = models.TextField()
+    rating = models.DecimalField(max_digits=3, decimal_places=2, default=None, null=True)
+    review = models.TextField(default=None, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
         return self.name
@@ -38,12 +39,15 @@ class Order(models.Model):
     created_at = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
-            return f"{self.name}'s Order"
+            return f"{self.name}'s Orders"
     
 class OrderItem(models.Model):
      order = models.ForeignKey(Order, on_delete=models.CASCADE)
      menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
      quantity = models.PositiveIntegerField()
+
+     def total_price(self):
+        return self.quantity * self.menu.price
 
      def __str__(self):
             return f"{self.quantity} x {self.menu.name} in Order {self.order.order_id}"

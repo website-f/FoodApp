@@ -51,6 +51,7 @@
                         <th scope="col">Status</th>
                         <th scope="col">Order Items</th>
                         <th scope="col">Created At</th>
+                        <th scope="col">Total Price</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -64,9 +65,17 @@
                         <td>{{order.email}}</td>
                         <td>{{order.status}}</td>
                         <td>
-                          {{order.menu.order.name}}
+                          <ul>
+                              {% for order_item in order.orderitem_set.all %}
+                                  <li>
+                                      {{ order_item.quantity }} x {{ order_item.menu.name }} - 
+                                      RM{{ order_item.total_price }} 
+                                  </li>
+                              {% endfor %}
+                          </ul>
                         </td>
                         <td>{{order.created_at}}</td>
+                        <td>RM{{ order.total_price }}</td>
                         <td>
                           <a class="btn btn-outline-primary" href=""><i class="bi bi-eye-fill"></i></a>
 

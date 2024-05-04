@@ -24,17 +24,70 @@
             <div class="col-12">
               <div class="card recent-sales overflow-auto">
 
-                <div class="filter">
-                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                    <li class="dropdown-header text-start">
-                      <h6>Filter</h6>
-                    </li>
-
-                    <li><a class="dropdown-item" href="#">Today</a></li>
-                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                  </ul>
+                <div class="filter p-2">
+                  <!-- Vertically centered Modal -->
+                  <button type="button" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#addCategory">
+                    <i class="bi bi-plus-lg"></i> Add Menu
+                  </button>
+                  <div class="modal fade" id="addCategory" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Add Menu</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <!-- Vertical Form -->
+                          <form method="POST" action="add-menu" class="row g-3" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="col-12">
+                              <label for="inputNanme4" class="form-label">Name</label>
+                              <input type="text" name="name" class="form-control" id="inputNanme4">
+                            </div>
+                            <div class="col-12">
+                              <label for="inputEmail4" class="form-label">Description</label>
+                              <textarea class="form-control" name="description" style="height: 100px"></textarea>
+                            </div>
+                            <div class="col-12">
+                              <label for="inputPassword4" class="form-label">Image</label>
+                              <input class="form-control" name="image" type="file" id="formFile">
+                            </div>
+                            <div class="col-12">
+                              <label for="inputNanme4" class="form-label">Price</label>
+                              <input type="number" name="price" class="form-control" id="inputNanme4">
+                            </div>
+                            <div class="col-12">
+                              <label for="inputNanme4" class="form-label">Rating</label>
+                              <input type="number" name="rating" class="form-control" id="inputNanme4">
+                            </div>
+                            <div class="col-12">
+                              <label for="inputNanme4" class="form-label">Review</label>
+                              <textarea class="form-control" name="review" style="height: 100px"></textarea>
+                            </div>
+                            <div class="col-12">
+                              <label class="col-sm-2 col-form-label">Category</label>
+                              <div class="col-sm-12">
+                                <select class="form-select" name="category" aria-label="Default select example">
+                                  <option selected>Select Category...</option>
+                                  {% for category in categories %}
+                                  <option value="{{category.id}}">{{category.name}}</option>
+                                  {% endfor %}
+                                </select>
+                              </div>
+                            </div>
+                            <div class="text-center">
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                              <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
+                          </form><!-- Vertical Form -->
+                        </div>
+                        <div class="modal-footer">
+                          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary">Sure</button> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div><!-- End Vertically centered Modal-->
                 </div>
 
                 <div class="card-body">
@@ -84,7 +137,7 @@
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                  <button type="button" class="btn btn-primary">Sure</button>
+                                  <a href="delete-menu/{{menu.id}}" class="btn btn-primary">Sure</a>
                                 </div>
                               </div>
                             </div>
