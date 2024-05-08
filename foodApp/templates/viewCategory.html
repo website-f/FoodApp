@@ -1,0 +1,106 @@
+{% load static %}
+{% include 'header.html' %}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>View Category</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/">Home</a></li>
+          <li class="breadcrumb-item active">View Category</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body pt-3">
+                  <!-- Bordered Tabs -->
+                  <ul class="nav nav-tabs nav-tabs-bordered">
+    
+                    <li class="nav-item">
+                      <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#overview-category">Overview</button>
+                    </li>
+    
+                    <li class="nav-item">
+                      <button class="nav-link" data-bs-toggle="tab" data-bs-target="#category-edit">Edit Category</button>
+                    </li>
+    
+                    
+                  </ul>
+                  <div class="tab-content pt-2">
+    
+                    <div class="tab-pane fade show active profile-overview" id="overview-category">
+
+                      <h5 class="card-title">Category Details</h5>
+    
+                      <div class="row">
+                        <div class="col-lg-3 col-md-4 label "><b>Name:</b></div>
+                        <div class="col-lg-9 col-md-8">{{category.name}}</div>
+                      </div>
+    
+                      <div class="row">
+                        <div class="col-lg-3 col-md-4 label"><b>Description:</b></div>
+                        <div class="col-lg-9 col-md-8">{{category.description}}</div>
+                      </div>
+    
+                      <div class="row">
+                        <div class="col-lg-3 col-md-4 label"><b>Image:</b></div>
+                        <div class="col-lg-9 col-md-8"><img style="height: 100px; width: 150px;" class="img-fluid img-responsive" src="{{category.image.url}}"></div>
+                      </div>
+    
+    
+                    </div>
+    
+                    <div class="tab-pane fade profile-edit pt-3" id="category-edit">
+    
+                      <!-- Profile Edit Form -->
+                      <form method="POST" action="/category/edit-category/{{category.id}}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row mb-3">
+                            <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Name</label>
+                            <div class="col-md-8 col-lg-9">
+                              <input name="name" type="text" class="form-control" id="fullName" value="{{category.name}}">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="about" class="col-md-4 col-lg-3 col-form-label">Description</label>
+                            <div class="col-md-8 col-lg-9">
+                              <textarea name="description" class="form-control" id="about" style="height: 100px">{{category.description}}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                          <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Image</label>
+                          <div class="col-md-8 col-lg-9">
+                            <img src="{{category.image.url}}" alt="Profile">
+                            <input name="image" type="file" class="form-control mt-2">
+                          </div>
+                        </div>
+    
+    
+                        <div class="text-center">
+                          <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                      </form><!-- End Profile Edit Form -->
+    
+                    </div>
+
+    
+                  </div><!-- End Bordered Tabs -->
+    
+                </div>
+              </div>
+        </div>
+
+      </div>
+    </section>
+
+</main><!-- End #main -->
+
+{% include 'footer.html' %}
