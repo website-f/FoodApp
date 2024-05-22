@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 
@@ -17,13 +18,21 @@ class Menu(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to="menu_images")
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    rating = models.DecimalField(max_digits=3, decimal_places=2, default=None, null=True)
-    review = models.TextField(default=None, null=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
         return self.name
+
+class Review(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
+    rating = models.DecimalField(max_digits=3, decimal_places=2)
+    review_text = models.TextField()
+    created_at = models.DateTimeField(default=datetime.now())
+
+    def __str__(self):
+        return f"Review for {self.menu.name} by {self.customer.name}"
     
 class Order(models.Model):
     order_id = models.CharField(max_length=100) 
@@ -54,10 +63,8 @@ class OrderItem(models.Model):
             return f"{self.quantity} x {self.menu.name} in Order {self.order.order_id}"
 
 class Customer(models.Model):
-     name = models.CharField(max_length=200)
-     email = models.CharField(max_length=100)
-     phone_number = models.CharField(max_length=20)
-     password = models.CharField(max_length=100)
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, null=True)
+    phone_number = models.CharField(max_length=20)
 
-     def __str__(self):
-        return self.name
+    def __str__(self):
+        return self.user.username

@@ -16,4 +16,21 @@ urlpatterns = [
     path('category/edit-category/<str:pk>', views.editCategory, name='editCategory'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
+
+    #API
+    path('api/categories', views.get_all_categories),
+    path('api/menus', views.get_all_menus),
+    path('api/order', views.create_order),
+    path('api/top-seller', views.top_sellers),
+    path('menu/<int:menu_id>/submit-review/', views.submit_review),
+    path('menu/<int:menu_id>/reviews/', views.get_reviews_for_menu, name='get_reviews_for_menu'),
+    path('api/recommended/', views.get_recommended_menus),
+
+    #auth
+    path('api/login', views.api_login),
+    path('api/logout', views.api_logout),
+    path('api/current-user', views.api_current_user),
+    path('api/login-stat', views.api_login_stat),
+    path('api/register', views.api_register),
+
 ]

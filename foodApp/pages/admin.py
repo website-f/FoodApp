@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import Category, Menu, Order, OrderItem, Customer
+from django.contrib.auth.admin import UserAdmin
 
-# Register your models here.
+
 
 # Category Model
 class CategoryAdmin(admin.ModelAdmin):
@@ -12,7 +13,7 @@ admin.site.register(Category, CategoryAdmin)
 
 # Menu Model
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ['name', 'description', 'image', 'price', 'rating', 'review', 'category']
+    list_display = ['name', 'description', 'image', 'price', 'category']
 
 admin.site.register(Menu, MenuAdmin)
 
@@ -30,6 +31,6 @@ admin.site.register(OrderItem, OrderItemAdmin)
 
 # Customer Model
 class CustomerAdmin(admin.ModelAdmin):
-    list_display = ['name', 'email', 'phone_number', 'password']
+    list_display = ['user','phone_number']
 
 admin.site.register(Customer, CustomerAdmin)
